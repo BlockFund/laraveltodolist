@@ -11,8 +11,9 @@ After you clone the repo,
 5. Execute these commands:
 1) cd docker
 2) ./build.sh
-3) ./run.sh
-4) ./composer.sh install
-5) ./artisan.sh migrate
-6) ./npm.sh install
-7) ./npm.sh run dev
+3) docker volume create --name=mysql-5.7-bfc
+4) ./run.sh
+5) ./composer.sh install
+6) ./artisan.sh migrate
+7) ./npm.sh install
+8) ./npm.sh run dev
