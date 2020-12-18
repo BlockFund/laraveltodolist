@@ -1,0 +1,42 @@
+version: "3.7"
+services:
+  apache:
+    build: ./apache
+    container_name: ${PROJECT_NAME}_apache
+    image: ${PROJECT_NAME}/apache
+    depends_on:
+      - mysql
+    networks:
+      - frontend
+      - backend
+    ports:
+      - 80:80
+    volumes:
+      - ../www:/www:rw,cached
+    environment:
+      - MYSQL_USER=${DB_USER}
+      - MYSQL_PASSWORD=${DB_PASSWORD}
+      - MYSQL_BD=${DB_NAME}
+
+  mysql:
+    image: mysql:5.7
+    container_name: ${PROJECT_NAME}_mysql
+    networks:
+      - backend
+    volumes:
+      - mysql-5.7-bfc:${MYSQL_DATA_DIR}:rw,cached
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+
+networks:
+  frontend:
+  backend:
+
+volumes:
+  mysql-5.7-bfc:
+    external: true
